@@ -1,5 +1,5 @@
 apiVersion: apps/v1beta2
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ template "dgxie.fullname" . }}
   labels:
@@ -102,6 +102,12 @@ spec:
               value: "{{ .Values.httpPort }}"
             - name: HTTPS_PROXY
               value: "{{ .Values.httpsProxy }}"
+            - name: MY_POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NUM_OF_REPLICAS
+              value: "{{ .Values.replicaCount }}"
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
