@@ -125,6 +125,8 @@ spec:
                 secretKeyRef:
                   name: pixiecore
                   key: signingkey
+            - name: BROADCAST
+              value: "{{ .Values.netPrvBroadcast }}"
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}
